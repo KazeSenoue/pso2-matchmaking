@@ -30,7 +30,7 @@ class Group:
                 file = ReadFile('cogs/json/matchmaking.json')
 
                 if ctx.message.author.id == file['groups'][index]['owner']:
-                    server = self.bot.get_server("228244312041848833")
+                    server = self.bot.get_server("80900839538962432")
                     for user in file['groups'][index]['members']:
                         await self.bot.remove_roles(server.get_member(user),
                                                     discord.utils.get(ctx.message.server.roles,
