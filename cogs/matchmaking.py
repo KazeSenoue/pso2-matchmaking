@@ -78,25 +78,28 @@ class Matchmaking:
         """Joins a group."""
 
         with self.lock:
-            try:
-                users = ReadFile('cogs/json/users.json')
-                file = ReadFile('cogs/json/matchmaking.json')
-                index = SearchGroup(id)
+            users = ReadFile('cogs/json/users.json')
+            if ctx.message.author.id in users:
+                try:
+                    file = ReadFile('cogs/json/matchmaking.json')
+                    index = SearchGroup(id)
 
-                if ctx.message.author.id not in file['groups'][index]['members']:
-                    try:
-                        await self.bot.add_roles(ctx.message.author, discord.utils.get(ctx.message.server.roles, name="Group {}".format(id)))
-                        file['groups'][index]['members'].append(ctx.message.author.id)
-                        WriteFile('cogs/json/matchmaking.json', file)
+                    if ctx.message.author.id not in file['groups'][index]['members']:
+                        try:
+                            await self.bot.add_roles(ctx.message.author, discord.utils.get(ctx.message.server.roles, name="Group {}".format(id)))
+                            file['groups'][index]['members'].append(ctx.message.author.id)
+                            WriteFile('cogs/json/matchmaking.json', file)
 
-                        await self.bot.say("{} Joined the ``{}`` group, owned by ``{}``.".format(ctx.message.author.mention, file['groups'][index]['quest'], users[file['groups'][index]['owner']]))
+                            await self.bot.say("{} Joined the ``{}`` group, owned by ``{}``.".format(ctx.message.author.mention, file['groups'][index]['quest'], users[file['groups'][index]['owner']]))
 
-                    except Exception as e:
-                        await self.bot.say("{} Could not find the requested group. Please check the #group-board channel.".format(ctx.message.author.mention))
-                else:
-                    await self.bot.say("{} You are already in that group.".format(ctx.message.author.mention))
-            except:
-                await self.bot.say("{} Could not find a group with that ID. Check #groups-board for the right ID.".format(ctx.message.author.mention))
+                        except Exception as e:
+                            await self.bot.say("{} Could not find the requested group. Please check the #group-board channel.".format(ctx.message.author.mention))
+                    else:
+                        await self.bot.say("{} You are already in that group.".format(ctx.message.author.mention))
+                except:
+                    await self.bot.say("{} Could not find a group with that ID. Check #groups-board for the right ID.".format(ctx.message.author.mention))
+            else:
+                await self.bot.say("You are not registered! Type ``!help reg``.")
 
     @lfp.command(pass_context=True)
     async def leave(self, ctx, id : int):
