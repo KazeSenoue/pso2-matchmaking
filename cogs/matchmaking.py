@@ -20,13 +20,12 @@ class Matchmaking:
         """Register your Player ID and receive full access to the server"""
 
         with self.lock:
-            if ctx.message.server.id == "228244312041848833":
-                file = ReadFile('cogs/json/users.json')
-                file.update({"{}".format(ctx.message.author.id) : "{}".format(playerID)})
-                WriteFile('cogs/json/users.json', file)
+            file = ReadFile('cogs/json/users.json')
+            file.update({"{}".format(ctx.message.author.id) : "{}".format(playerID)})
+            WriteFile('cogs/json/users.json', file)
 
-                await self.bot.change_nickname(ctx.message.author, playerID)
-                await self.bot.add_roles(ctx.message.author, discord.utils.get(ctx.message.server.roles, name="LFP"))
+            await self.bot.change_nickname(ctx.message.author, playerID)
+            await self.bot.add_roles(ctx.message.author, discord.utils.get(ctx.message.server.roles, name="LFP"))
 
     @commands.command(pass_context=True)
     async def changePID(self, ctx, *, playerID: str):
@@ -69,7 +68,7 @@ class Matchmaking:
             WriteFile('cogs/json/matchmaking.json', file)
 
             message = "@here A group for ``{}`` on Ship {} has been created by ``{}``. Type ``!lfp join {}`` to join!".format(questname, ship, ctx.message.author.nick, id)
-            await self.bot.send_message(discord.Object("228986443920310274"), message)
+            await self.bot.send_message(discord.Object("174958246837223425"), message)
 
     @lfp.command(pass_context=True)
     async def join(self, ctx, id : int):
