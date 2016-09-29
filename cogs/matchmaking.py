@@ -45,30 +45,33 @@ class Matchmaking:
         """Creates a group."""
 
         with self.lock:
-            file = ReadFile('cogs/json/matchmaking.json')
             users = ReadFile('cogs/json/users.json')
+            if ctx.message.author.id in users:
+                file = ReadFile('cogs/json/matchmaking.json')
 
-            try:
-                id = file['groups'][-1]['id'] + 1
-            except Exception:
-                id = 0
+                try:
+                    id = file['groups'][-1]['id'] + 1
+                except Exception:
+                    id = 0
 
-            file['groups'].append({"id" : id, "quest" : questname, "ship" : ship, "owner" : ctx.message.author.id, "members" : [ctx.message.author.id], "maxmembers" : maxmembers})
-            if not discord.utils.get(ctx.message.server.roles, name="Group {}".format(id)):
-                await self.bot.create_role(ctx.message.server, name="Group {}".format(id))
+                file['groups'].append({"id" : id, "quest" : questname, "ship" : ship, "owner" : ctx.message.author.id, "members" : [ctx.message.author.id], "maxmembers" : maxmembers})
+                if not discord.utils.get(ctx.message.server.roles, name="Group {}".format(id)):
+                    await self.bot.create_role(ctx.message.server, name="Group {}".format(id))
 
-            await asyncio.sleep(1)
-            await self.bot.add_roles(ctx.message.author, discord.utils.get(ctx.message.server.roles, name="Group {}".format(id)))
+                await asyncio.sleep(1)
+                await self.bot.add_roles(ctx.message.author, discord.utils.get(ctx.message.server.roles, name="Group {}".format(id)))
 
-            everyone = discord.PermissionOverwrite(read_messages=False)
-            mine = discord.PermissionOverwrite(read_messages=True, send_messages=True)
+                everyone = discord.PermissionOverwrite(read_messages=False)
+                mine = discord.PermissionOverwrite(read_messages=True, send_messages=True)
 
-            await self.bot.create_channel(ctx.message.server, 'group-{}'.format(id), (ctx.message.server.default_role, everyone), (discord.utils.get(ctx.message.server.roles, name="Group {}".format(id)), mine))
+                await self.bot.create_channel(ctx.message.server, 'group-{}'.format(id), (ctx.message.server.default_role, everyone), (discord.utils.get(ctx.message.server.roles, name="Group {}".format(id)), mine))
 
-            WriteFile('cogs/json/matchmaking.json', file)
+                WriteFile('cogs/json/matchmaking.json', file)
 
-            message = "@here A group for ``{}`` on Ship {} has been created by ``{}``. Type ``!lfp join {}`` to join!".format(questname, ship, ctx.message.author.nick, id)
-            await self.bot.send_message(discord.Object("174958246837223425"), message)
+                message = "@here A group for ``{}`` on Ship {} has been created by ``{}``. Type ``!lfp join {}`` to join!".format(questname, ship, ctx.message.author.nick, id)
+                await self.bot.send_message(discord.Object("174958246837223425"), message)
+            else:
+                await self.bot.say("You are not registered! Type ``!help reg``.")
 
     @lfp.command(pass_context=True)
     async def join(self, ctx, id : int):
