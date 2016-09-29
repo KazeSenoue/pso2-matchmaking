@@ -28,6 +28,24 @@ class Matchmaking:
             await self.bot.add_roles(ctx.message.author, discord.utils.get(ctx.message.server.roles, name="LFP"))
 
     @commands.command(pass_context=True)
+    async def help(self, ctx):
+        message = "**-> Bot instructions**\n" \
+                "The bot works on a group system. Someone creates a group for a quest, a temporary text channel is cre" \
+                  "ated (to allow communication between the group members), and anyone can freely join / leave with a " \
+                  "simple command.\n\n" \
+                "**-> Matchmaking commands:**\n" \
+                "!help - Displays help message.\n" \
+                "!lfp create <ship number> <max members> <quest name> - Creates a group for the desired quest\n" \
+                "!lfp join <group ID> - Joins a group (Each group and it's respective ID are in the #groups-board channel)\n" \
+                "!lfp leave <group ID> - Leaves a group\n\n" \
+                "**-> Group commands:** (Must be used in a group channel)\n" \
+                "!group leave - Leaves the group\n\n" \
+                "**-> Group owner commands:** (Must be used in a group channel)\n" \
+                "!group remove <user> - Removes user from your group\n" \
+                "!group finish - Finishes the quest and deletes the channel\n"
+        await self.bot.send_message(ctx.message.author, message)
+
+    @commands.command(pass_context=True)
     async def changePID(self, ctx, *, playerID: str):
         """Changes your Player ID"""
 
