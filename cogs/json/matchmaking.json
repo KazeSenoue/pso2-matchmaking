@@ -1,14 +1,4 @@
 {
     "groups": [
-        {
-            "id": 0,
-            "maxmembers": 4,
-            "members": [
-                "91387943679172608"
-            ],
-            "owner": "91387943679172608",
-            "quest": "Urban VHAQ Burst",
-            "ship": 2
-        }
     ]
 }
