@@ -86,7 +86,7 @@ class Matchmaking:
 
                 WriteFile('cogs/json/matchmaking.json', file)
 
-                message = " A group for ``{}`` on Ship {} has been created by ``{}``. Type ``!lfp join {}`` to join!".format(questname, ship, ctx.message.author.nick, id)
+                message = "@here A group for ``{}`` on Ship {} has been created by ``{}``. Type ``!lfp join {}`` to join!".format(questname, ship, ctx.message.author.nick, id)
                 await self.bot.send_message(discord.Object("174958246837223425"), message)
             else:
                 await self.bot.say("You are not registered! Type ``!help reg``.")
