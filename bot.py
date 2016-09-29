@@ -29,6 +29,12 @@ async def on_ready():
     print('Cogs: {}'.format(bot.cogs))
     print('---------')
 
+@bot.event
+async def on_message(message):
+    if message.channel.id == "80900839538962432":
+        pass
+    else:
+        await bot.process_commands(message)
 
 @bot.event
 async def on_member_join(member):
