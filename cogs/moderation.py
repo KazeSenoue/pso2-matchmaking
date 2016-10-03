@@ -22,22 +22,25 @@ class Moderation:
 
         if ctx.message.author.id in admins:
             with self.lock:
-                index = SearchGroup(groupID)
-                file = ReadFile('cogs/json/matchmaking.json')
+                try:
+                    index = SearchGroup(groupID)
+                    file = ReadFile('cogs/json/matchmaking.json')
 
-                server = ctx.message.server
-                for user in file['groups'][index]['members']:
-                    await self.bot.remove_roles(server.get_member(user),
-                                                discord.utils.get(server.roles, name="Group {}".format(groupID)))
+                    server = ctx.message.server
+                    for user in file['groups'][index]['members']:
+                        await self.bot.remove_roles(server.get_member(user),
+                                                    discord.utils.get(server.roles, name="Group {}".format(groupID)))
 
-                await self.bot.delete_channel(
-                    discord.utils.get(server.channels, name="group-{}".format(groupID)))
-                await self.bot.delete_role(server,
-                                           discord.utils.get(server.roles, name="Group {}".format(groupID)))
+                    await self.bot.delete_channel(
+                        discord.utils.get(server.channels, name="group-{}".format(groupID)))
+                    await self.bot.delete_role(server,
+                                               discord.utils.get(server.roles, name="Group {}".format(groupID)))
 
-                file['groups'].pop(index)
+                    file['groups'].pop(index)
 
-                WriteFile('cogs/json/matchmaking.json', file)
+                    WriteFile('cogs/json/matchmaking.json', file)
+                except:
+                    await self.bot.say("Something went wrong.")
 
     @commands.command(pass_context=True)
     async def remove(self, ctx, groupID : int, *, membername : str):
