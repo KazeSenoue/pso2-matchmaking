@@ -19,7 +19,7 @@ async def group_board(bot):
             groups.append("``{0:02d}.`` {1} ({2}/{3}) - {4}".format(group['id'], group['quest'], len(group['members']), group['maxmembers'], users[group['owner']]))
 
         groups = sorted(groups)
-        channel = bot.get_channel("80900839538962432")
+        channel = bot.get_channel("230850446737145856")
         message = await bot.get_message(channel, "230851417559138307")
         await bot.edit_message(message, string + "\n".join(groups))
 
