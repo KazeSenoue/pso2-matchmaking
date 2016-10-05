@@ -15,7 +15,6 @@ class Moderation:
         self.bot = bot
         self.lock = threading.RLock()
 
-    @checks.mod_or_permissions(manage_messages=True, no_pm=True)
     @commands.command(pass_context=True)
     async def finish(self, ctx, groupID : int):
         """Finishes a group."""
