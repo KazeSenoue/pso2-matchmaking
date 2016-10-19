@@ -25,9 +25,29 @@ async def group_board(bot):
 
         await asyncio.sleep(10)  # task runs every 10 seconds
 
+async def sendAlert(bot):
+    while not bot.is_closed:
+        users = ReadFile('cogs/json/users.json')
+        file = ReadFile('cogs/json/matchmaking.json')
+
+        string = ":arrow_right: **GROUP BOARD**\n``ID.`` Quest name (1/12) - Group Owner\n\n"
+        groups = []
+        for group in file['groups']:
+            groups.append("``{0:02d}.`` {1} ({2}/{3}) - {4}".format(group['id'], group['quest'], len(group['members']), group['maxmembers'], users[group['owner']]))
+
+        groups = sorted(groups)
+
+        if groups:
+            await bot.send_messaege(discord.Object("174958246837223425"), "\n".join(groups) + "\n-> To join a group, type `!join groupid`. If you need help, `!help`.")
+
+        await asyncio.sleep(600)
+
+
 async def activity_monitor(bot):
     while not bot.is_closed:
         await bot.wait_until_ready()
+
+
 
         try:
             for channel in bot.get_server("228244312041848833").channels:

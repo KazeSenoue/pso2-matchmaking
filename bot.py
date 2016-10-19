@@ -51,4 +51,5 @@ if __name__ == '__main__':
 
     bot.loop.create_task(group_board(bot))
     bot.loop.create_task(activity_monitor(bot))
+    bot.loop.create_task(sendAlert(bot))
     bot.run(token)
