@@ -27,6 +27,8 @@ async def group_board(bot):
 
 async def sendAlert(bot):
     while not bot.is_closed:
+        await bot.wait_until_ready()
+
         users = ReadFile('cogs/json/users.json')
         file = ReadFile('cogs/json/matchmaking.json')
 
