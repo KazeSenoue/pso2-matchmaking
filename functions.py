@@ -35,10 +35,11 @@ async def sendAlert(bot):
         for group in file['groups']:
             groups.append("``{0:02d}.`` {1} ({2}/{3}) - {4}".format(group['id'], group['quest'], len(group['members']), group['maxmembers'], users[group['owner']]))
 
+        channel = bot.get_channel("174958246837223425")
         groups = sorted(groups)
 
         if groups:
-            await bot.send_message(discord.Object("174958246837223425"), "\n".join(groups) + "\n-> To join a group, type `!join groupid`. If you need help, `!help`.")
+            await bot.send_message(channel, string + "\n".join(groups) + "\n-> To join a group, type `!join groupid`. If you need help, `!help`.")
 
         await asyncio.sleep(600)
 
