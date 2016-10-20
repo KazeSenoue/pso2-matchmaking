@@ -39,7 +39,7 @@ async def sendAlert(bot):
         groups = sorted(groups)
 
         if groups:
-            await bot.send_message(channel, string + "\n".join(groups) + "\n-> To join a group, type `!join groupid`. If you need help, `!help`.")
+            await bot.send_message(discord.Object("174958246837223425"), string + "\n".join(groups) + "\n-> To join a group, type `!join groupid`. If you need help, `!help`.")
 
         await asyncio.sleep(600)
 
