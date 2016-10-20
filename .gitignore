@@ -1,4 +1,5 @@
 settings.py
+cogs/json/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

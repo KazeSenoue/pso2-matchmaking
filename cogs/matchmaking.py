@@ -24,7 +24,6 @@ class Matchmaking:
             file.update({"{}".format(ctx.message.author.id) : "{}".format(playerID)})
             WriteFile('cogs/json/users.json', file)
 
-            await self.bot.change_nickname(ctx.message.author, playerID)
             await self.bot.add_roles(ctx.message.author, discord.utils.get(ctx.message.server.roles, name="LFP"))
             await self.bot.say("{} Registered!".format(ctx.message.author.mention))
 
@@ -140,7 +139,7 @@ class Matchmaking:
                 await self.bot.say("{} You are not in that group.".format(ctx.message.author.mention))
 
     @lfp.command(pass_context=True)
-    async def remove(self, ctx, id : int, member : str):
+    async def remove(self, ctx, member : str):
         """Removes a selected member from a group. GROUP OWNER ONLY"""
 
         with self.lock:
